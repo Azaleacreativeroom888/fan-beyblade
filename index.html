@@ -3,157 +3,608 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pixar Fan Log</title>
+  <title>爆転ファンログ - BEYLOG</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+JP:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --red: #E5001A;
+      --navy: #0B0E2D;
+      --gold: #F5C400;
+      --white: #F2EFE6;
+      --bg: #0B0E2D;
+      --card: #121533;
+      --border: rgba(245,196,0,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      font-family: "Helvetica Neue", sans-serif;
-      background-color: #F7A1C4;
-      color: black;
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      overflow-x: hidden;
     }
 
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.3;
+    }
+
+    /* ── SPINNING BEYS BACKGROUND ── */
+    .bg-beys {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-bey {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.04;
+      animation: spin linear infinite;
+    }
+    .bg-bey:nth-child(1) { width: 600px; height: 600px; top: -150px; right: -100px; border: 30px solid var(--red); animation-duration: 18s; }
+    .bg-bey:nth-child(2) { width: 400px; height: 400px; bottom: 10%; left: -120px; border: 20px solid var(--gold); animation-duration: 12s; animation-direction: reverse; }
+    .bg-bey:nth-child(3) { width: 250px; height: 250px; top: 50%; right: 8%; border: 15px solid var(--white); animation-duration: 22s; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── HEADER ── */
     header {
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #333;
+      position: relative;
+      z-index: 10;
+      padding: 24px 30px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 4px;
+    }
+    .logo-bey {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      background: conic-gradient(var(--red) 0deg 90deg, var(--navy) 90deg 180deg, var(--gold) 180deg 270deg, var(--red) 270deg 360deg);
+      animation: spin 3s linear infinite;
+      flex-shrink: 0;
+    }
     header h1 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 2px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(32px, 6vw, 52px);
+      letter-spacing: 6px;
+      color: var(--white);
+      text-shadow: 3px 3px 0 var(--red);
+      line-height: 1;
     }
-
+    .header-sub {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
     nav {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 10px;
+      gap: 28px;
     }
-
     nav a {
-      color: #aaa;
+      color: rgba(242,239,230,0.5);
       text-decoration: none;
-      font-size: 14px;
-    }
-
-    nav a:hover {
-      color: #fff;
-    }
-
-    .container {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .intro {
-      margin-bottom: 30px;
-      line-height: 1.6;
-      color: black;
-    }
-
-    .section {
-      margin-bottom: 40px;
-    }
-
-    .section h2 {
-      border-left: 4px solid #888;
-      padding-left: 10px;
-      margin-bottom: 15px;
-    }
-
-    .post {
-      margin-bottom: 15px;
-      padding: 10px;
-      background-color: #fde8f0;
-      border-radius: 5px;
-    }
-
-    .post a {
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-    }
-
-    .post p {
-      margin: 5px 0 0;
       font-size: 13px;
-      color: black;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.25s;
+    }
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { width: 100%; }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      padding: 60px 20px 48px;
+      overflow: hidden;
+    }
+    .hero-slash {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, transparent 45%, rgba(229,0,26,0.06) 45%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      letter-spacing: 5px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-title {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(48px, 10vw, 96px);
+      line-height: 0.95;
+      color: var(--white);
+      text-shadow: 4px 4px 0 var(--red), 8px 8px 0 rgba(229,0,26,0.2);
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-desc {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(242,239,230,0.75);
+      max-width: 500px;
+      margin-inline: auto;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── DIVIDER ── */
+    .divider {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      margin: 8px 0;
+    }
+    .divider svg { width: 100%; height: 24px; }
+
+    /* ── CONTAINER ── */
+    .container {
+      position: relative;
+      z-index: 5;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 24px 60px;
+    }
+
+    /* ── SECTION HEADING ── */
+    .section { margin-bottom: 50px; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-head h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: var(--white);
+    }
+    .section-head .tag {
+      background: var(--red);
+      color: var(--white);
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* ── INTRO CARD ── */
+    .intro-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+      padding: 22px 26px;
+      line-height: 2;
+      font-size: 14px;
+      color: rgba(242,239,230,0.85);
+      margin-bottom: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .intro-card::before {
+      content: '爆転！';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 72px;
+      color: rgba(245,196,0,0.04);
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    /* ── POSTS ── */
+    .posts { display: flex; flex-direction: column; gap: 12px; }
+    .post {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .post::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--red);
+      transform: scaleY(0);
+      transition: transform 0.2s;
+      transform-origin: bottom;
+    }
+    .post:hover { border-color: rgba(245,196,0,0.5); transform: translateX(4px); }
+    .post:hover::before { transform: scaleY(1); }
+    .post-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--red);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 28px;
+    }
+    .post-body { flex: 1; }
+    .post-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+      display: block;
+    }
+    .post-desc { font-size: 12px; color: rgba(242,239,230,0.5); }
+    .post-arrow {
+      align-self: center;
+      font-size: 18px;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .post:hover .post-arrow { opacity: 1; transform: translateX(4px); }
+
+    /* ── CHARACTER ROSTER ── */
+    .roster {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .chara {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 12px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .chara:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(245,196,0,0.15);
+    }
+    .chara-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      font-family: 'Bebas Neue', sans-serif;
+    }
+    .chara-name { font-size: 13px; font-weight: 700; color: var(--white); }
+    .chara-bey  { font-size: 10px; color: rgba(242,239,230,0.4); margin-top: 4px; letter-spacing: 1px; }
+
+    /* character colors */
+    .c-takao  { background: linear-gradient(135deg, #0033aa, #0055ff); color: #fff; }
+    .c-kai    { background: linear-gradient(135deg, #440000, #aa0000); color: #fff; }
+    .c-max    { background: linear-gradient(135deg, #005522, #00aa44); color: #fff; }
+    .c-rei    { background: linear-gradient(135deg, #2a0055, #7700cc); color: #fff; }
+    .c-kenny  { background: linear-gradient(135deg, #553300, #cc7700); color: #fff; }
+    .c-tyson  { background: linear-gradient(135deg, #aa6600, #ffcc00); color: #333; }
+
+    /* ── GALLERY ── */
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
-
-    .gallery img {
-      width: 100%;
-      border-radius: 5px;
+    .gallery-item {
+      aspect-ratio: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
     }
+    .gallery-item:hover { transform: scale(1.03); border-color: var(--gold); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .gallery-placeholder .ph-icon { font-size: 28px; opacity: 0.3; }
+    .gallery-placeholder .ph-label { font-size: 10px; letter-spacing: 2px; color: rgba(242,239,230,0.25); }
 
+    /* ── BEY STATS BAR ── */
+    .bey-spotlight {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 24px;
+    }
+    .bey-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .bey-type { font-size: 11px; letter-spacing: 3px; color: rgba(242,239,230,0.4); margin-bottom: 18px; }
+    .stat-row { margin-bottom: 12px; }
+    .stat-label { font-size: 11px; letter-spacing: 2px; color: rgba(242,239,230,0.5); margin-bottom: 5px; display: flex; justify-content: space-between; }
+    .stat-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; }
+    .stat-fill { height: 100%; border-radius: 99px; animation: growBar 1s ease both; }
+    @keyframes growBar { from { width: 0; } }
+    .s-atk { background: linear-gradient(to right, var(--red), #ff6644); width: 92%; }
+    .s-def { background: linear-gradient(to right, #0055ff, #44aaff); width: 65%; }
+    .s-stm { background: linear-gradient(to right, var(--gold), #ffee66); width: 80%; }
+    .s-spd { background: linear-gradient(to right, #00cc66, #66ffaa); width: 88%; }
+
+    /* ── FOOTER ── */
     footer {
+      position: relative;
+      z-index: 5;
       text-align: center;
-      padding: 20px;
-      border-top: 1px solid #333;
-      font-size: 12px;
-      color: gray;
+      padding: 28px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: rgba(242,239,230,0.3);
+      letter-spacing: 2px;
     }
+    footer strong { color: var(--gold); }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Pixar Fan Log</h1>
-    <nav>
-      <a href="index.html">HOME</a>
-      <a href="blog.html">BLOG</a>
-      <a href="gallery.html">GALLERY</a>
-      <a href="about.html">ABOUT</a>
-    </nav>
-  </header>
+<!-- BG DECORATION -->
+<div class="bg-beys" aria-hidden="true">
+  <div class="bg-bey"></div>
+  <div class="bg-bey"></div>
+  <div class="bg-bey"></div>
+</div>
 
-  <div class="container">
+<!-- HEADER -->
+<header>
+  <div class="logo-wrap">
+    <div class="logo-bey" aria-hidden="true"></div>
+    <h1>BEYLOG</h1>
+  </div>
+  <p class="header-sub">爆転シュートベイブレード ファンログ</p>
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="blog.html">BLOG</a>
+    <a href="gallery.html">GALLERY</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+</header>
 
-    <div class="intro">
-      <p>
-        このサイトは『Pixar』のファンアートを置くための場所です。<br>
-        正しい解釈とかじゃなくて、「ここ好き」「なんか分からないけど良い」を大事にしてます。
-      </p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slash" aria-hidden="true"></div>
+  <p class="hero-eyebrow">FAN SITE</p>
+  <h2 class="hero-title">爆転<span>シュート</span><br>ベイブレード</h2>
+  <p class="hero-desc">
+    タカオたちの熱さが忘れられない。<br>
+    このサイトは「好きだ」という気持ちだけで動いてます。<br>
+    正しい解釈とかじゃなくて、刺さったものを刺さったまま置いとく場所。
+  </p>
+</section>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="intro-card">
+    初代アニメを見て育ったオタクのファンサイトです。<br>
+    語彙力がなくなるほど好きなシーンとか、なんか分からんけど刺さるコマとか、そういうのを溜めていきます。<br>
+    同じ気持ちの人がいたら嬉しいです。
+  </div>
+
+  <!-- LATEST POSTS -->
+  <div class="section">
+    <div class="section-head">
+      <h2>LATEST POSTS</h2>
+      <span class="tag">NEW</span>
+      <div class="section-line"></div>
     </div>
-
-    <div class="section">
-      <h2>Latest Posts</h2>
-
-      <div class="post">
-        <a href="blog.html">第○話のこのシーンが好きすぎる</a>
-        <p>感情がぐちゃぐちゃになるやつ</p>
-      </div>
-
-      <div class="post">
-        <a href="blog.html">この表情なんなんだろう</a>
-        <p>分からないけどめちゃくちゃ好き</p>
-      </div>
-
+    <div class="posts">
+      <a href="blog.html" class="post">
+        <span class="post-num">01</span>
+        <div class="post-body">
+          <span class="post-title">タカオのこのシーンが好きすぎる</span>
+          <span class="post-desc">感情がぐちゃぐちゃになる。何度見ても何度でも。</span>
+        </div>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="blog.html" class="post">
+        <span class="post-num">02</span>
+        <div class="post-body">
+          <span class="post-title">カイのこの表情なんなんだろう</span>
+          <span class="post-desc">分からないけどめちゃくちゃ好き。語れない。</span>
+        </div>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="blog.html" class="post">
+        <span class="post-num">03</span>
+        <div class="post-body">
+          <span class="post-title">ドラグーンに初めて乗り移った瞬間の話</span>
+          <span class="post-desc">あのシーンだけで3回泣いてる</span>
+        </div>
+        <span class="post-arrow">→</span>
+      </a>
     </div>
+  </div>
 
-    <div class="section">
-      <h2>Illustration</h2>
+  <!-- CHARACTER ROSTER -->
+  <div class="section">
+    <div class="section-head">
+      <h2>CHARACTERS</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="roster">
+      <div class="chara">
+        <div class="chara-icon c-takao">竜</div>
+        <div class="chara-name">木ノ宮タカオ</div>
+        <div class="chara-bey">ドラグーン</div>
+      </div>
+      <div class="chara">
+        <div class="chara-icon c-kai">烈</div>
+        <div class="chara-name">火渡カイ</div>
+        <div class="chara-bey">ドランザー</div>
+      </div>
+      <div class="chara">
+        <div class="chara-icon c-max">亀</div>
+        <div class="chara-name">マックス</div>
+        <div class="chara-bey">ドライガー</div>
+      </div>
+      <div class="chara">
+        <div class="chara-icon c-rei">虎</div>
+        <div class="chara-name">レイ</div>
+        <div class="chara-bey">ドライガー</div>
+      </div>
+      <div class="chara">
+        <div class="chara-icon c-kenny">脳</div>
+        <div class="chara-name">ケニー</div>
+        <div class="chara-bey">ディセボルダー</div>
+      </div>
+    </div>
+  </div>
 
+  <!-- 2-COLUMN: GALLERY + BEY STATS -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
+
+    <!-- GALLERY -->
+    <div class="section" style="margin-bottom:0">
+      <div class="section-head">
+        <h2>ILLUSTRATION</h2>
+        <div class="section-line"></div>
+      </div>
       <div class="gallery">
-        <img src="img1.jpg" alt="">
-        <img src="img2.jpg" alt="">
-        <img src="img3.jpg" alt="">
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="ph-icon">🌀</span>
+            <span class="ph-label">FAN ART</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="ph-icon">🔥</span>
+            <span class="ph-label">FAN ART</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="ph-icon">⚡</span>
+            <span class="ph-label">FAN ART</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="ph-icon">🐉</span>
+            <span class="ph-label">FAN ART</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="ph-icon">🌙</span>
+            <span class="ph-label">FAN ART</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="ph-icon">💫</span>
+            <span class="ph-label">FAN ART</span>
+          </div>
+        </div>
       </div>
+    </div>
 
+    <!-- BEY SPOTLIGHT -->
+    <div class="section" style="margin-bottom:0">
+      <div class="section-head">
+        <h2>BEY STATS</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="bey-spotlight">
+        <div class="bey-name">DRAGOON</div>
+        <div class="bey-type">ATTACK TYPE — 嵐の龍</div>
+        <div class="stat-row">
+          <div class="stat-label"><span>ATTACK</span><span>92</span></div>
+          <div class="stat-bar"><div class="stat-fill s-atk"></div></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label"><span>DEFENSE</span><span>65</span></div>
+          <div class="stat-bar"><div class="stat-fill s-def"></div></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label"><span>STAMINA</span><span>80</span></div>
+          <div class="stat-bar"><div class="stat-fill s-stm"></div></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label"><span>SPEED</span><span>88</span></div>
+          <div class="stat-bar"><div class="stat-fill s-spd"></div></div>
+        </div>
+      </div>
     </div>
 
   </div>
 
-  <footer>
-    <p>© Fan Log</p>
-  </footer>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>BEYLOG</strong> — 爆転シュートベイブレード非公式ファンサイト<br>
+  © Fan Log · このサイトは個人のファンによる非営利サイトです</p>
+</footer>
 
 </body>
 </html>
