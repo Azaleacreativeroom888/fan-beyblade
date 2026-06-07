@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLOG — BEYLOG</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red:   #E5001A;
+      --navy:  #0B0E2D;
+      --gold:  #F5C400;
+      --white: #F2EFE6;
+      --card:  #121533;
+      --muted: rgba(242,239,230,0.4);
+      --border: rgba(245,196,0,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* spinning bg rings */
+    .bg-beys { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .bg-bey { position: absolute; border-radius: 50%; opacity: 0.04; animation: spin linear infinite; }
+    .bg-bey:nth-child(1) { width: 500px; height: 500px; top: -100px; right: -80px;  border: 24px solid var(--red);  animation-duration: 18s; }
+    .bg-bey:nth-child(2) { width: 320px; height: 320px; bottom: 5%; left: -80px;   border: 16px solid var(--gold); animation-duration: 12s; animation-direction: reverse; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* header */
+    header {
+      position: relative; z-index: 10;
+      padding: 20px 30px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 5px; color: var(--white); text-shadow: 2px 2px 0 var(--red); text-decoration: none; }
+    nav { display: flex; gap: 24px; margin-top: 10px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    /* page title */
+    .page-title {
+      position: relative; z-index: 5;
+      text-align: center;
+      padding: 40px 20px 28px;
+    }
+    .page-title h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      letter-spacing: 8px;
+      color: var(--white);
+    }
+    .page-title p { font-size: 12px; letter-spacing: 3px; color: var(--muted); margin-top: 6px; }
+
+    /* diary list */
+    .diary {
+      position: relative; z-index: 5;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.4s ease both;
+    }
+    .entry:first-child { border-top: 1px solid var(--border); }
+
+    /* stagger */
+    .entry:nth-child(1)  { animation-delay: 0.05s; }
+    .entry:nth-child(2)  { animation-delay: 0.10s; }
+    .entry:nth-child(3)  { animation-delay: 0.15s; }
+    .entry:nth-child(4)  { animation-delay: 0.20s; }
+    .entry:nth-child(5)  { animation-delay: 0.25s; }
+    .entry:nth-child(6)  { animation-delay: 0.30s; }
+    .entry:nth-child(7)  { animation-delay: 0.35s; }
+    .entry:nth-child(8)  { animation-delay: 0.40s; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: none; } }
+
+    .date {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: var(--gold);
+      padding-top: 2px;
+      line-height: 1.4;
+    }
+    .date .day { font-size: 22px; display: block; line-height: 1; }
+
+    .text {
+      font-size: 14px;
+      line-height: 2;
+      color: rgba(242,239,230,0.85);
+    }
+
+    footer {
+      position: relative; z-index: 5;
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: rgba(242,239,230,0.25);
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-beys" aria-hidden="true">
+  <div class="bg-bey"></div>
+  <div class="bg-bey"></div>
+</div>
+
+<header>
+  <a href="index.html" class="logo">BEYLOG</a>
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="blog.html" class="active">BLOG</a>
+    <a href="gallery.html">GALLERY</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+</header>
+
+<div class="page-title">
+  <h1>BLOG</h1>
+  <p>日付と一言だけの日記</p>
+</div>
+
+<div class="diary">
+
+  <div class="entry">
+    <div class="date"><span class="day">07</span>JUN 2025</div>
+    <div class="text">タカオが諦めないシーン、何回見ても泣く。なんで？</div>
+  </div>
+
+  <div class="entry">
+    <div class="date"><span class="day">02</span>JUN 2025</div>
+    <div class="text">カイって実はめちゃくちゃ優しいよなって改めて思った。</div>
+  </div>
+
+  <div class="entry">
+    <div class="date"><span class="day">28</span>MAY 2025</div>
+    <div class="text">ドラグーンがステジアムを割るシーンの迫力がやばすぎる。</div>
+  </div>
+
+  <div class="entry">
+    <div class="date"><span class="day">21</span>MAY 2025</div>
+    <div class="text">マックスのキャラクターが好きすぎてずっと見てられる。</div>
+  </div>
+
+  <div class="entry">
+    <div class="date"><span class="day">14</span>MAY 2025</div>
+    <div class="text">レイの体さばきがカッコよすぎる件。ベイブレードアニメの中で一番好きかも。</div>
+  </div>
+
+  <div class="entry">
+    <div class="date"><span class="day">09</span>MAY 2025</div>
+    <div class="text">BGMが全体的に強すぎる。サントラもう一回聴こう。</div>
+  </div>
+
+  <div class="entry">
+    <div class="date"><span class="day">03</span>MAY 2025</div>
+    <div class="text">ブレーダー同士の目線の交わし方がすごく好き。言葉いらないやつ。</div>
+  </div>
+
+  <div class="entry">
+    <div class="date"><span class="day">27</span>APR 2025</div>
+    <div class="text">初めてこのアニメ見た日のこと思い出した。あの感覚忘れたくないな。</div>
+  </div>
+
+</div>
+
+<footer>BEYLOG — 非公式ファンサイト</footer>
+
+</body>
+</html>
