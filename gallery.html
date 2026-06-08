@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GALLERY — BEYLOG</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red:    #E5001A;
+      --navy:   #0B0E2D;
+      --gold:   #F5C400;
+      --white:  #F2EFE6;
+      --card:   #121533;
+      --muted:  rgba(242,239,230,0.4);
+      --border: rgba(245,196,0,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* bg rings */
+    .bg-beys { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .bg-bey   { position: absolute; border-radius: 50%; opacity: 0.04; animation: spin linear infinite; }
+    .bg-bey:nth-child(1) { width: 500px; height: 500px; top: -100px; right: -80px;  border: 24px solid var(--red);  animation-duration: 18s; }
+    .bg-bey:nth-child(2) { width: 320px; height: 320px; bottom: 5%; left: -80px;   border: 16px solid var(--gold); animation-duration: 12s; animation-direction: reverse; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* header */
+    header {
+      position: relative; z-index: 10;
+      padding: 20px 30px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 5px; color: var(--white); text-shadow: 2px 2px 0 var(--red); text-decoration: none; }
+    nav { display: flex; gap: 24px; margin-top: 10px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    /* page title */
+    .page-title {
+      position: relative; z-index: 5;
+      text-align: center;
+      padding: 40px 20px 28px;
+    }
+    .page-title h1 { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 8px; }
+    .page-title p  { font-size: 12px; letter-spacing: 3px; color: var(--muted); margin-top: 6px; }
+
+    /* gallery container */
+    .gallery-wrap {
+      position: relative; z-index: 5;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    /* each cell */
+    .cell {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      animation: fadeUp 0.5s ease both;
+    }
+    /* make first item span 2 cols */
+    .cell:first-child {
+      grid-column: span 2;
+      aspect-ratio: 2 / 1;
+    }
+
+    /* stagger */
+    .cell:nth-child(1) { animation-delay: 0.05s; }
+    .cell:nth-child(2) { animation-delay: 0.10s; }
+    .cell:nth-child(3) { animation-delay: 0.15s; }
+    .cell:nth-child(4) { animation-delay: 0.20s; }
+    .cell:nth-child(5) { animation-delay: 0.25s; }
+    .cell:nth-child(6) { animation-delay: 0.30s; }
+    .cell:nth-child(7) { animation-delay: 0.35s; }
+    .cell:nth-child(8) { animation-delay: 0.40s; }
+    .cell:nth-child(9) { animation-delay: 0.45s; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(14px); } to { opacity:1; transform: none; } }
+
+    .cell img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .cell:hover img { transform: scale(1.05); }
+
+    /* overlay on hover */
+    .cell-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(11,14,45,0.85) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px 16px;
+    }
+    .cell:hover .cell-overlay { opacity: 1; }
+    .cell-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.4;
+    }
+    .cell-label span {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+    }
+
+    /* placeholder (no img) */
+    .placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0.2;
+    }
+    .placeholder .ico  { font-size: 36px; }
+    .placeholder .lbl  { font-size: 10px; letter-spacing: 3px; }
+
+    /* ── LIGHTBOX ── */
+    .lb {
+      display: none;
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(11,14,45,0.95);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lb.open { display: flex; }
+    .lb-inner {
+      position: relative;
+      max-width: 800px;
+      width: 100%;
+      animation: lbIn 0.25s ease;
+    }
+    @keyframes lbIn { from { opacity:0; transform: scale(0.96); } to { opacity:1; transform: none; } }
+    .lb-inner img {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .lb-caption {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .lb-close {
+      position: absolute;
+      top: -36px; right: 0;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      background: none; border: none;
+    }
+    .lb-close:hover { color: var(--gold); }
+
+    footer {
+      position: relative; z-index: 5;
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: rgba(242,239,230,0.25);
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-beys" aria-hidden="true">
+  <div class="bg-bey"></div>
+  <div class="bg-bey"></div>
+</div>
+
+<header>
+  <a href="index.html" class="logo">BEYLOG</a>
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="blog.html">BLOG</a>
+    <a href="gallery.html" class="active">GALLERY</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+</header>
+
+<div class="page-title">
+  <h1>GALLERY</h1>
+  <p>FAN ILLUSTRATION</p>
+</div>
+
+<div class="gallery-wrap">
+  <div class="grid">
+
+    <!-- 画像があるとき: <img src="画像ファイル名" alt=""> を入れる -->
+    <!-- 画像がないとき: placeholder のままでOK -->
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img1.jpg" alt="タカオ"> -->
+      <div class="placeholder"><span class="ico">🌀</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>タカオ</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img2.jpg" alt="カイ"> -->
+      <div class="placeholder"><span class="ico">🔥</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>カイ</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img3.jpg" alt="ドラグーン"> -->
+      <div class="placeholder"><span class="ico">🐉</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>ドラグーン</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img4.jpg" alt="レイ"> -->
+      <div class="placeholder"><span class="ico">🌙</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>レイ</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img5.jpg" alt="マックス"> -->
+      <div class="placeholder"><span class="ico">⚡</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>マックス</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img6.jpg" alt="バトルシーン"> -->
+      <div class="placeholder"><span class="ico">💫</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>バトルシーン</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img7.jpg" alt="ケニー"> -->
+      <div class="placeholder"><span class="ico">🔩</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>ケニー</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img8.jpg" alt="スケッチ"> -->
+      <div class="placeholder"><span class="ico">✏️</span><span class="lbl">SKETCH</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>SKETCH</span>落書き</div></div>
+    </div>
+
+    <div class="cell" onclick="openLb(this)">
+      <!-- <img src="img9.jpg" alt=""> -->
+      <div class="placeholder"><span class="ico">🌀</span><span class="lbl">FAN ART</span></div>
+      <div class="cell-overlay"><div class="cell-label"><span>ILLUST</span>集合絵</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb(event)">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLb()">CLOSE ✕</button>
+    <img id="lb-img" src="" alt="">
+    <p class="lb-caption" id="lb-cap"></p>
+  </div>
+</div>
+
+<footer>BEYLOG — 非公式ファンサイト</footer>
+
+<script>
+  function openLb(cell) {
+    const img = cell.querySelector('img');
+    if (!img) return; // placeholder は開かない
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-cap').textContent = cell.querySelector('.cell-label').lastChild.textContent.trim();
+    document.getElementById('lb').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb(e) {
+    if (e && e.target !== document.getElementById('lb') && !e.target.classList.contains('lb-close')) return;
+    document.getElementById('lb').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+
+</body>
+</html>
