@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>爆転シュートベイブレード 感想 — BEYLOG</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red:    #E5001A;
+      --navy:   #0B0E2D;
+      --gold:   #F5C400;
+      --white:  #F2EFE6;
+      --card:   #121533;
+      --muted:  rgba(242,239,230,0.4);
+      --border: rgba(245,196,0,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+    }
+
+    .bg-beys { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .bg-bey   { position: absolute; border-radius: 50%; opacity: 0.04; animation: spin linear infinite; }
+    .bg-bey:nth-child(1) { width: 500px; height: 500px; top: -100px; right: -80px; border: 24px solid var(--red);  animation-duration: 18s; }
+    .bg-bey:nth-child(2) { width: 320px; height: 320px; bottom: 5%; left: -80px;  border: 16px solid var(--gold); animation-duration: 12s; animation-direction: reverse; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    header {
+      position: relative; z-index: 10;
+      padding: 20px 30px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 5px; color: var(--white); text-shadow: 2px 2px 0 var(--red); text-decoration: none; }
+    nav { display: flex; gap: 24px; margin-top: 10px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    .page-title { position: relative; z-index: 5; text-align: center; padding: 40px 20px 28px; }
+    .page-title h1 { font-family: 'Black Han Sans', 'Noto Sans JP', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 3px; line-height: 1.4; }
+    .page-title p  { font-size: 12px; letter-spacing: 3px; color: var(--muted); margin-top: 8px; }
+
+    .container { position: relative; z-index: 5; max-width: 640px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .ep {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 0 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ep:first-child { border-top: 1px solid var(--border); }
+
+    .ep-no {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      line-height: 1;
+      color: var(--gold);
+      padding-top: 2px;
+    }
+    .ep-no span { display: block; font-size: 11px; letter-spacing: 3px; color: var(--red); margin-bottom: 2px; }
+
+    .ep-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .ep-note  { font-size: 13px; line-height: 1.9; color: rgba(242,239,230,0.8); }
+    .ep-note.empty { color: rgba(242,239,230,0.22); }
+
+    .back { display: inline-block; margin-top: 28px; font-size: 12px; letter-spacing: 2px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back:hover { color: var(--gold); }
+
+    footer {
+      position: relative; z-index: 5;
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: rgba(242,239,230,0.25);
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-beys" aria-hidden="true">
+  <div class="bg-bey"></div>
+  <div class="bg-bey"></div>
+</div>
+
+<header>
+  <a href="index.html" class="logo">BEYLOG</a>
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="blog.html">BLOG</a>
+    <a href="gallery.html" class="active">GALLERY</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+</header>
+
+<div class="page-title">
+  <h1>爆転シュートベイブレード</h1>
+  <p>全51話の感想</p>
+</div>
+
+<div class="container">
+
+  <!-- 感想を書くときは class="ep-note empty" を class="ep-note" に変えて、中の文を書き換える -->
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>01</div>
+      <div class="ep-body">
+        <div class="ep-title">爆転バトル、ゴー・シュート！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>02</div>
+      <div class="ep-body">
+        <div class="ep-title">ほえろ青龍！ ドラグーン誕生！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>03</div>
+      <div class="ep-body">
+        <div class="ep-title">新しき友、その名はマックス</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>04</div>
+      <div class="ep-body">
+        <div class="ep-title">開幕！ バトルトーナメント</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>05</div>
+      <div class="ep-body">
+        <div class="ep-title">激突！ マックスVSカイ</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>06</div>
+      <div class="ep-body">
+        <div class="ep-title">吹き荒れろ！ ドラグーンストーム</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>07</div>
+      <div class="ep-body">
+        <div class="ep-title">タカオVSカイ 宿命の対決</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>08</div>
+      <div class="ep-body">
+        <div class="ep-title">結成！ BBAチーム世界へ</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>09</div>
+      <div class="ep-body">
+        <div class="ep-title">新たなる聖獣 白虎族</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>10</div>
+      <div class="ep-body">
+        <div class="ep-title">駆け上がれ！ アジア大会！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>11</div>
+      <div class="ep-body">
+        <div class="ep-title">レイ、白虎を失う！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>12</div>
+      <div class="ep-body">
+        <div class="ep-title">さらばBBAチーム！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>13</div>
+      <div class="ep-body">
+        <div class="ep-title">さけべレイ！ うなれ白虎！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>14</div>
+      <div class="ep-body">
+        <div class="ep-title">不戦敗？ 分断のBBAチーム</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>15</div>
+      <div class="ep-body">
+        <div class="ep-title">決戦！ アジアの頂点をかけて！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>16</div>
+      <div class="ep-body">
+        <div class="ep-title">白虎VS山猫</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>17</div>
+      <div class="ep-body">
+        <div class="ep-title">ファイナルバトル！ 漆黒の稲妻！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>18</div>
+      <div class="ep-body">
+        <div class="ep-title">負けるな！ 小さなブレーダー</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>19</div>
+      <div class="ep-body">
+        <div class="ep-title">上陸、新たな戦場！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>20</div>
+      <div class="ep-body">
+        <div class="ep-title">戦慄のアメリカン・パワー！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>21</div>
+      <div class="ep-body">
+        <div class="ep-title">特訓！ 新しき力を求めて</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>22</div>
+      <div class="ep-body">
+        <div class="ep-title">大統領VS世界選抜！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>23</div>
+      <div class="ep-body">
+        <div class="ep-title">開幕 アメリカ大会！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>24</div>
+      <div class="ep-body">
+        <div class="ep-title">アメリカンヒーロー、マイケルの力</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>25</div>
+      <div class="ep-body">
+        <div class="ep-title">準決勝、超高速サーキット！！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>26</div>
+      <div class="ep-body">
+        <div class="ep-title">激突！ アメリカ大会決勝戦</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>27</div>
+      <div class="ep-body">
+        <div class="ep-title">灼熱のスコーピオン！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>28</div>
+      <div class="ep-body">
+        <div class="ep-title">決着！ アメリカ大会！！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>29</div>
+      <div class="ep-body">
+        <div class="ep-title">BBA 熱き戦いの軌跡</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>30</div>
+      <div class="ep-body">
+        <div class="ep-title">聖獣を従える者</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>31</div>
+      <div class="ep-body">
+        <div class="ep-title">ヨーロッパ、波乱の旅立ち</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>32</div>
+      <div class="ep-body">
+        <div class="ep-title">強襲！ 闇のブレーダー！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>33</div>
+      <div class="ep-body">
+        <div class="ep-title">黒い影の軍団</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>34</div>
+      <div class="ep-body">
+        <div class="ep-title">華麗なる聖獣使い</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>35</div>
+      <div class="ep-body">
+        <div class="ep-title">コロッセオの決闘！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>36</div>
+      <div class="ep-body">
+        <div class="ep-title">倒せ！アンピスバイナ</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>37</div>
+      <div class="ep-body">
+        <div class="ep-title">女王陛下のブレーダー</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>38</div>
+      <div class="ep-body">
+        <div class="ep-title">結成！最強のユーロチーム</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>39</div>
+      <div class="ep-body">
+        <div class="ep-title">決めろ！ 勝利への力</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>40</div>
+      <div class="ep-body">
+        <div class="ep-title">決勝の地ロシア</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>41</div>
+      <div class="ep-body">
+        <div class="ep-title">いまわしき記憶の扉</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>42</div>
+      <div class="ep-body">
+        <div class="ep-title">最強を望む者</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>43</div>
+      <div class="ep-body">
+        <div class="ep-title">悪夢のセレモニーマッチ</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>44</div>
+      <div class="ep-body">
+        <div class="ep-title">さらばカイ！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>45</div>
+      <div class="ep-body">
+        <div class="ep-title">バイカル湖の決闘</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>46</div>
+      <div class="ep-body">
+        <div class="ep-title">ボーグ襲来！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>47</div>
+      <div class="ep-body">
+        <div class="ep-title">再会！ ユーロチーム</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>48</div>
+      <div class="ep-body">
+        <div class="ep-title">カイの選択</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>49</div>
+      <div class="ep-body">
+        <div class="ep-title">白虎の叫び</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>50</div>
+      <div class="ep-body">
+        <div class="ep-title">雪原の黙示録</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+    <div class="ep">
+      <div class="ep-no"><span>EP</span>51</div>
+      <div class="ep-body">
+        <div class="ep-title">ベイブレードよ永遠に！</div>
+        <div class="ep-note empty">感想をここに書く</div>
+      </div>
+    </div>
+
+  <a href="report1.html" class="back">← REPORTに戻る</a>
+</div>
+
+<footer>BEYLOG — 非公式ファンサイト</footer>
+
+</body>
+</html>
